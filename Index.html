@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reelio - Home page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: white;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            min-height: 100vh;
+            padding-bottom: 70px;
+        }
+
+        /* Header Styles */
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Pacifico', cursive;
+            font-size: 28px;
+            background: linear-gradient(45deg, #ff6b6b, #ffa502, #ff4757);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(255, 107, 107, 0.3);
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+            font-size: 22px;
+        }
+
+        .header-icons i {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .header-icons i:hover {
+            color: #ff6b6b;
+            transform: scale(1.1);
+        }
+
+        /* Story Section Styles */
+        .story-btn-section {
+            display: flex;
+            align-items: center;
+            padding: 20px 15px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .story-btn-section::-webkit-scrollbar {
+            display: none;
+        }
+
+        .story-btn-user {
+            position: relative;
+            height: 85px;
+            width: 85px;
+            min-width: 85px;
+            margin: 0 15px 0 5px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff9a3d, #ff6b6b, #ff4757);
+            padding: 4px;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .story-btn-user:hover {
+            transform: scale(1.05);
+        }
+
+        .story-btn-user img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #1a1a1a;
+        }
+
+        .add-story-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(45deg, #3897f0, #2e86de);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #1a1a1a;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-story-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(56, 151, 240, 0.5);
+        }
+
+        .vertical-line {
+            width: 1px;
+            height: 70px;
+            background: linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+            margin: 0 15px;
+        }
+
+        .story-fri-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding: 5px 0;
+            scrollbar-width: none;
+        }
+
+        .story-fri-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .story-cont {
+            height: 80px;
+            width: 80px;
+            min-width: 80px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            background: linear-gradient(45deg, #ff9a3d, #ff6b6b, #ff4757);
+            background-origin: border-box;
+            box-shadow: 0 4px 10px rgba(255, 107, 107, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .story-cont:hover {
+            transform: scale(1.05);
+        }
+
+        .story-cont::before {
+            content: "";
+            height: 72px;
+            width: 72px;
+            border-radius: 50%;
+            background: #2a2a2a;
+            display: block;
+        }
+
+        /* Video Post Styles */
+        .post-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+        }
+
+        .post-profile-img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+            border: 2px solid transparent;
+            background: linear-gradient(45deg, #ff9a3d, #ff6b6b, #ff4757);
+            padding: 2px;
+        }
+
+        .post-profile-img img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #000;
+        }
+
+        .post-username {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .post-more {
+            margin-left: auto;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .post-video-container {
+            position: relative;
+            width: 100%;
+            background: #000;
+            aspect-ratio: 9/16;
+            overflow: hidden;
+        }
+
+        .post-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-controls {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .post-video-container:hover .video-controls {
+            opacity: 1;
+        }
+
+        .play-pause-btn {
+            background: rgba(0, 0, 0, 0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .post-actions {
+            display: flex;
+            padding: 12px 15px;
+            align-items: center;
+        }
+
+        .post-action {
+            margin-right: 18px;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .post-action:hover {
+            transform: scale(1.1);
+        }
+
+        .post-action.save {
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        .post-likes {
+            padding: 0 15px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .post-caption {
+            padding: 0 15px;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .post-caption-username {
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .post-comments {
+            padding: 0 15px;
+            color: #a8a8a8;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .post-time {
+            padding: 0 15px;
+            color: #a8a8a8;
+            font-size: 10px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        /* Footer Styles */
+        .bottom-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 15px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .bottom-footer a {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 22px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px;
+        }
+
+        .bottom-footer a:hover {
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .bottom-footer a.active {
+            color: #ff6b6b;
+        }
+
+        .bottom-footer a.active::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 5px;
+            background: #ff6b6b;
+            border-radius: 50%;
+        }
+
+        .search-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff4757);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+
+            .story-btn-user,
+            .story-cont {
+                height: 70px;
+                width: 70px;
+                min-width: 70px;
+            }
+
+            .story-cont::before {
+                height: 62px;
+                width: 62px;
+            }
+
+            .add-story-btn {
+                width: 24px;
+                height: 24px;
+                font-size: 14px;
+            }
+
+            .vertical-line {
+                height: 60px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <!-- header -->
+    <header>
+        <div class="top-header">
+            <div>
+                <h1 class="logo">Reelio</h1>
+            </div>
+            <div class="header-icons">
+                <i class="fa-regular fa-heart"></i>
+                <i class="fa-regular fa-paper-plane"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- main -->
+    <main>
+        <div class="story-btn-section">
+            <!-- user own story button -->
+            <div class="story-btn-user">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                    alt="Your story">
+                <div class="add-story-btn">
+                    <i class="fas fa-plus"></i>
+                </div>
+            </div>
+
+            <div class="vertical-line"></div>
+
+            <!-- friends story buttons -->
+            <div class="story-fri-container">
+                <div class="story-cont" title="Emma's story"></div>
+                <div class="story-cont" title="James's story"></div>
+                <div class="story-cont" title="Sophia's story"></div>
+                <div class="story-cont" title="Liam's story"></div>
+                <div class="story-cont" title="Olivia's story"></div>
+                <div class="story-cont" title="Noah's story"></div>
+                <div class="story-cont" title="Ava's story"></div>
+                <div class="story-cont" title="William's story"></div>
+                <div class="story-cont" title="Isabella's story"></div>
+                <div class="story-cont" title="Lucas's story"></div>
+            </div>
+        </div>
+
+        <!-- Video Post 1 -->
+        <div class="post-container">
+            <div class="post-header">
+                <div class="post-profile-img">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=388&q=80" alt="Profile">
+                </div>
+                <div class="post-username">sophia_m</div>
+                <div class="post-more">
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+            </div>
+            
+            <div class="post-video-container">
+               <iframe class="post-video"
+    src="https://drive.google.com/file/d/1An40ndw1R29zjY2seWV0YGewFTw7q6hH/preview
+"
+    frameborder="0"
+    allow="autoplay; encrypted-media"
+    allowfullscreen>
+</iframe>
+               <div class="video-controls">
+                    <div class="play-pause-btn">
+                        <i class="fas fa-pause"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-actions">
+                <div class="post-action">
+                    <i class="fa-regular fa-heart"></i>
+                </div>
+                <div class="post-action">
+                    <i class="fa-regular fa-comment"></i>
+                </div>
+                <div class="post-action">
+                    <i class="fa-regular fa-paper-plane"></i>
+                </div>
+                <div class="post-action save">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+            </div>
+            
+            <div class="post-likes">12,483 likes</div>
+            <div class="post-caption">
+                <span class="post-caption-username">sophia_m</span>
+                Enjoying the neon vibes tonight! ✨ #nightlife #neonlights
+            </div>
+            <div class="post-comments">View all 243 comments</div>
+            <div class="post-time">2 hours ago</div>
+        </div>
+
+        <!-- Video Post 2 -->
+        <div class="post-container">
+            <div class="post-header">
+                <div class="post-profile-img">
+                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80" alt="Profile">
+                </div>
+                <div class="post-username">michael_art</div>
+                <div class="post-more">
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+            </div>
+            
+            <div class="post-video-container">
+                <video class="post-video" loop muted autoplay>
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-hand-painting-a-canvas-12359-large.mp4" type="video/mp4">
+                </video>
+                <div class="video-controls">
+                    <div class="play-pause-btn">
+                        <i class="fas fa-pause"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-actions">
+                <div class="post-action">
+                    <i class="fa-regular fa-heart"></i>
+                </div>
+                <div class="post-action">
+                    <i class="fa-regular fa-comment"></i>
+                </div>
+                <div class="post-action">
+                    <i class="fa-regular fa-paper-plane"></i>
+                </div>
+                <div class="post-action save">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+            </div>
+            
+            <div class="post-likes">8,721 likes</div>
+            <div class="post-caption">
+                <span class="post-caption-username">michael_art</span>
+                New piece I've been working on. What do you think? 🎨 #art #painting
+            </div>
+            <div class="post-comments">View all 187 comments</div>
+            <div class="post-time">5 hours ago</div>
+        </div>
+    </main>
+
+    <!-- footer -->
+    <footer>
+        <div class="bottom-footer">
+            <!-- home button -->
+            <a href="#" class="active">
+                <i class="fa-solid fa-house"></i>
+            </a>
+            <!-- Search button -->
+            <a href="#" class="nav-btn">
+                <i class="fas fa-search"></i>
+            </a>
+            <!-- create button -->
+            <a href="#" class="search-btn"><i class="fas fa-plus"></i></a>
+            <!-- Reels button -->
+            <a href="#" class="reels-btn"><i class="fas fa-clapperboard"></i></a>
+            <!-- Profile button -->
+            <a href="#"><i class="fas fa-user"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        
+        // Like button functionality
+        document.querySelectorAll('.post-action .fa-heart').forEach(heart => {
+            heart.addEventListener('click', function() {
+                this.classList.toggle('fa-regular');
+                this.classList.toggle('fa-solid');
+                this.style.color = this.classList.contains('fa-solid') ? '#ff3041' : '';
+            });
+        });
+    </script>
+</body>
+
+</html>
